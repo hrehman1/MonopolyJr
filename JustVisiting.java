@@ -1,3 +1,9 @@
+/**	Project 1 : Monopoly Jr
+ * JustVisiting : object representing just visiting space, no real functionality
+ * 
+ * @author Hudhaifah Rehman & Gideon Antwi
+ * @version 10/5/2021
+ */
 
 public class JustVisiting extends BoardSpace
 {

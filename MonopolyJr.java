@@ -1,3 +1,9 @@
+/**	Project 1 : Monopoly Jr
+ * MonopolyJr : main class with the essential functionality of monopoly
+ * 
+ * @author Hudhaifah Rehman & Gideon Antwi
+ * @version 10/5/2021
+ */ 
 
 public class MonopolyJr 
 {

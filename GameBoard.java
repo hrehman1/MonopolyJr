@@ -1,7 +1,7 @@
 /** Project #1 : Monopoly Jr
  * GameBoard : class representing the gameboard, includes space finding methods 
  * 
- * @author Hudhaifah Rehman
+ * @author Hudhaifah Rehman & Gideon Antwi
  * @version 10/1/2021
  */
 
@@ -58,7 +58,6 @@ public class GameBoard
 	}
 	
 	//space finding methods
-	
 	/** findNearestProperty(int) : finds the closest unowned property and rechecks for owned properties if no owned properties are found
 	 * 
 	 * 
@@ -92,6 +91,11 @@ public class GameBoard
 		return -1;
 	}
 	
+	/**	findSpaceByName(String) : finds the space using a name parameter
+	 * 
+	 * @param name
+	 * @return index of property by name
+	 */
 	public int findSpaceByName(String name)
 	{
 		for (int iterator = 0; iterator < board.length; iterator++)	//checks every boardspace to see if theres a name match
@@ -102,6 +106,12 @@ public class GameBoard
 		return -1;
 	}
 	
+	/** findPropertyByColor(String, int) : finds nearest property of arg color
+	 * 
+	 * @param color
+	 * @param startIndex
+	 * @return index of closest property of color
+	 */
 	public int findPropertyByColor(String color, int startIndex)
 	{
 		for (int iterator = startIndex; iterator < board.length; iterator++)
@@ -119,6 +129,13 @@ public class GameBoard
 		return -1;
 	}
 	
+	/** findPropertyByColor(String, String, int) : overloaded to handle multiple possible colors
+	 * 
+	 * @param color
+	 * @param color2
+	 * @param startIndex
+	 * @return index of nearest property of either color
+	 */
 	public int findPropertyByColor(String color, String color2, int startIndex)
 	{
 		for (int iterator = startIndex; iterator < board.length; iterator++)
@@ -136,6 +153,14 @@ public class GameBoard
 		return -1;
 	}
 	
+	/** findPropertyByColor(String, String, String, int) : finds nearest property of any 3 colors from startindex
+	 * 
+	 * @param color
+	 * @param color2
+	 * @param color3
+	 * @param startIndex
+	 * @return index of nearest property of either color
+	 */
 	public int findPropertyByColor(String color, String color2, String color3, int startIndex)
 	{
 		for (int iterator = startIndex; iterator < board.length; iterator++)

@@ -1,3 +1,9 @@
+/**	Project 1 : Monopoly Jr
+ * Go : object representing go space, gives player $2 when passed/landed on
+ * 
+ * @author Hudhaifah Rehman & Gideon Antwi
+ * @version 10/5/2021
+ */
 
 public class Go extends BoardSpace
 {
@@ -6,6 +12,9 @@ public class Go extends BoardSpace
 		name = "Go";
 	}
 	
+	/**
+	 * onLanding : gives player $2 when passed go
+	 */
 	@Override
 	public void onLanding(Player player) 
 	{

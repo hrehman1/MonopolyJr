@@ -1,3 +1,9 @@
+/**	Project 1 : Monopoly Jr
+ * Property : object representing property space, checks for owned property pairs 
+ * 
+ * @author Hudhaifah Rehman & Gideon Antwi
+ * @version 10/5/2021
+ */
 
 public class Property extends BoardSpace
 {
@@ -14,11 +20,18 @@ public class Property extends BoardSpace
 		this.name = name;
 	}
 	
+	/** setPropertyPair(Property) : assigns propertyPair to the this.propertyPair variable
+	 * 
+	 * @param propertyPair
+	 */
 	public void setPropertyPair(Property propertyPair)
 	{
 		this.propertyPair = propertyPair;
 	}
 	
+	/**
+	 * onLanding : checks for owned status and performs code based on that, also performs double rent check
+	 */
 	@Override
 	public void onLanding(Player player)
 	{
@@ -59,6 +72,9 @@ public class Property extends BoardSpace
 			return "You landed on " + name + ", buy it for $" + cost;
 	}
 	
+	/**
+	 * doubleRentCheck : checks if propertyPair is owned by same person, if so doubles rent of both
+	 */
 	public void doubleRentCheck()
 	{
 		if (propertyPair.owned)

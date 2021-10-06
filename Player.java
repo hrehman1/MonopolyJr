@@ -1,3 +1,9 @@
+/**	Project 1 : Monopoly Jr
+ * Player : object representing a player, includes state booleans
+ * 
+ * @author Hudhaifah Rehman & Gideon Antwi
+ * @version 10/5/2021
+ */
 
 public class Player 
 {
@@ -24,6 +30,10 @@ public class Player
 		return name + ", cash : $" + cash + ", position : " + position;
 	}
 	
+	/** moveForward(int) : moves player forward int number of spaces and resets to 0 when at end of array to prevent index out of bounds error
+	 * 
+	 * @param spaces
+	 */
 	public void moveForward(int spaces)
 	{
 		if (position + spaces >= MonopolyJr.gameBoard.board.length)

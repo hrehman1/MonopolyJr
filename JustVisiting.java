@@ -9,7 +9,7 @@ public class JustVisiting extends BoardSpace
 {
 	public JustVisiting()
 	{
-		
+		name = "Just Visiting";
 	}
 	
 	@Override

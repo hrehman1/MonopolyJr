@@ -13,6 +13,7 @@ public class Player
 	public boolean inJail;
 	public boolean hasGetOutOfJailFree;
 	public boolean hasPropertyChanceCard;
+	public boolean lost;
 	
 	public Player(String name)
 	{

@@ -16,6 +16,8 @@ import java.util.ArrayList;
  * more player-program interaction (allowing players to type something to roll, etc)
  * migrate chance cards over to separate classes (not necessary but would help)
  * ^abstract class ChanceCard, children classes : ColorChanceCard, SpaceChanceCard, PaymentChanceCard, ChoiceChanceCard, GiveChanceCard, FreeJailCard (or something like that)
+ * change instance variables to private and add getters/setters
+ * look for unused variables to get rid of
  */
 
 public class MonopolyJr 

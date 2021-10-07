@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**	Project 1 : Monopoly Jr
  * MonopolyJr : main class with the essential functionality of monopoly
  * 
@@ -5,33 +7,39 @@
  * @version 10/5/2021
  */ 
 
+/** Current fixes
+ * add message for free parking
+ * different message for free properties and paid properties
+ * add get out of jail message
+ * some kind of bug not allowing players to pay if they go into negatives, but still letting them continue playing
+ * when any player goes bankrupt, unknown error happens in for loop to check bankruptcy
+ * more player-program interaction (allowing players to type something to roll, etc)
+ * migrate chance cards over to separate classes (not necessary but would help)
+ * ^abstract class ChanceCard, children classes : ColorChanceCard, SpaceChanceCard, PaymentChanceCard, ChoiceChanceCard, GiveChanceCard, FreeJailCard (or something like that)
+ */
+
 public class MonopolyJr 
 {
 	public static Die die = new Die();
 	public static GameBoard gameBoard = new GameBoard();
-	public static Player[] players = new Player[] { new Player("Toy Boat"),	//initialize all players
-			  new Player("Toy Car"),
-			  new Player("Little Hazel"),
-			  new Player("Little Scottie") };
+	public static ArrayList<Player> players = new ArrayList<Player>();
 	
 	public static void main(String[] args)
 	{
 		int currentPlayer = (int)(Math.random() * 4);
+		Player winner = null;
+		
+		//initialize players
+		players.add(new Player("Toy Boat"));
+		players.add(new Player("Toy Car"));
+		players.add(new Player("Little Hazel"));
+		players.add(new Player("Little Scottie"));
 		
 		//tests
-		//Property boardwalk = (Property)gameBoard.board[gameBoard.findSpaceByName("Boardwalk")]; causing error???
-		//System.out.println(boardwalk);
-		
-		Property pink = (Property)gameBoard.board[gameBoard.findPropertyByColor("Pink", 8)];
-		System.out.println(pink);
-		
-		Property lightBlue = (Property)gameBoard.board[gameBoard.findPropertyByColor("Light Blue", "Pink", "Dark Blue", 0)];
-		System.out.println(lightBlue);
-		
 		//just takes 20 turns for testing purposes
-		for (int iterator = 0; iterator < 20; iterator++)
+		while (winner == null)
 		{
-			turn(players[currentPlayer]);
+			turn(players.get(currentPlayer));
 			currentPlayer = nextPlayer(currentPlayer);
 			
 			System.out.println();
@@ -40,9 +48,26 @@ public class MonopolyJr
 				System.out.println(player);
 			}
 			System.out.println();
+			
+			if (players.size() == 1)
+			{
+				winner = players.get(0);
+			}
+			
+			for (Player player : players)
+			{
+				if (player.cash <= 0) 
+				{
+					players.remove(player);
+				}
+			}
 		}
 	}
 	
+	/** turn(Player) : carries out a full turn and does onLanding code
+	 * 
+	 * @param player
+	 */
 	public static void turn(Player player)
 	{
 		if (player.hasPropertyChanceCard)	//handles chance cards [16 - 19]
@@ -83,14 +108,24 @@ public class MonopolyJr
 		}
 	}
 	
+	/** nextPlayer(int) ensures that the currentPlayer iterator wont go out of bounds of the arraylist
+	 * 
+	 * @param currentPlayer
+	 * @return index of next player
+	 */
 	public static int nextPlayer(int currentPlayer)
 	{
-		if (currentPlayer == 3)
+		if (currentPlayer == players.size() - 1)
 			return 0;
 		else
 			return currentPlayer + 1;
 	}
 	
+	/** findPlayerByName(String) : searches through players arraylist to return the player object w a matching name
+	 * 
+	 * @param name
+	 * @return the player
+	 */
 	public static Player findPlayerByName(String name)
 	{
 		for (Player player : players)
@@ -99,5 +134,18 @@ public class MonopolyJr
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * 
+	 * @param player
+	 * @param amountToPay
+	 */
+	public static void bankruptCheck(Player player, int amountToPay)
+	{
+		if (player.cash - amountToPay < 0)
+		{
+			
+		}
 	}
 }

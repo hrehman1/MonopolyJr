@@ -1,11 +1,11 @@
+import java.util.Scanner;
+
 /**	Project 1 : Monopoly Jr
  * Chance : object representing the chance space on the gameBoard, randomly selects one of 20 cards that affect the player on landing
  * 
- * @author Hudhaifah Rehman & Gideon Antwi
+ * @author Hudhaifah Rehman
  * @version 9/30/2021
  */
-
-import java.util.Scanner;
 
 public class Chance extends BoardSpace
 {
@@ -14,9 +14,6 @@ public class Chance extends BoardSpace
 		name = "Chance";
 	}
 	
-	/** 
-	 *  onLanding() : randomly selects a chance card and performs that action
-	 */
 	@Override
 	public void onLanding(Player player) 
 	{
@@ -122,7 +119,7 @@ public class Chance extends BoardSpace
 			player.cash += 2;
 			break;
 		case 14:
-			System.out.println("It’s your birthday! Collect $2 from the Bank. Happy Birthday!");
+			System.out.println("Itï¿½s your birthday! Collect $2 from the Bank. Happy Birthday!");
 			player.cash += 2;
 			break;
 		case 15:
@@ -166,10 +163,7 @@ public class Chance extends BoardSpace
 		return "You landed on chance, pick a chance card";
 	}
 	
-	/** chanceProperty : gives player free chance property if unowned
-	 * 
-	 * @param player
-	 */
+	//handles free properties
 	public void chanceProperty(Player player)
 	{
 		player.hasPropertyChanceCard = true;

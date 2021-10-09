@@ -15,6 +15,6 @@ public class FreeParking extends BoardSpace
 	@Override
 	public void onLanding(Player player)
 	{
-		
+		System.out.println("You landed on Free Parking! Do nothing.");
 	}
 }

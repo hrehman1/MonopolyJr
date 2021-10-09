@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */ 
 
 /** Current fixes
- * add message for free parking
+ * add message for free parking [-]
  * different message for free properties and paid properties
  * add get out of jail message
  * some kind of bug not allowing players to pay if they go into negatives, but still letting them continue playing
@@ -41,7 +41,9 @@ public class MonopolyJr
 		//just takes 20 turns for testing purposes
 		while (winner == null)
 		{
-			turn(players.get(currentPlayer));
+			System.out.println("current Player: " + currentPlayer);
+			System.out.println("next Player: " + nextPlayer(currentPlayer));
+			turn(players.get(currentPlayer)); // <- Index 3 out of bounds for length 3
 			currentPlayer = nextPlayer(currentPlayer);
 			
 			System.out.println();
@@ -56,13 +58,25 @@ public class MonopolyJr
 				winner = players.get(0);
 			}
 			
+			// [+] Remove player
+			ArrayList<Player> removedPlayers = new ArrayList<Player>();
+
 			for (Player player : players)
 			{
 				if (player.cash <= 0) 
 				{
-					players.remove(player);
+					// players.remove(player); <- Cannot remove from list while looping, throws ConcurrentModificationException.
+					removedPlayers.add(player); // Add player that needs to be removed to another array list called RemovedPlayers
 				}
 			}
+
+			// [+] Loop through removedPlayer arraylist, remove players from players arraylist
+			for (Player player : removedPlayers) {
+				players.remove(player);
+			} 
+
+			// [+] Clear removedPlayer arraylist for next set.
+			removedPlayers.clear();
 		}
 	}
 	
@@ -117,7 +131,8 @@ public class MonopolyJr
 	 */
 	public static int nextPlayer(int currentPlayer)
 	{
-		if (currentPlayer == players.size() - 1)
+		System.out.println("Player size: " + players.size());
+		if (currentPlayer >= players.size() - 1 || currentPlayer == players.size())
 			return 0;
 		else
 			return currentPlayer + 1;

@@ -16,15 +16,15 @@ import java.util.ArrayList;
  * more player-program interaction (allowing players to type something to roll, etc)
  * migrate chance cards over to separate classes (not necessary but would help)
  * ^abstract class ChanceCard, children classes : ColorChanceCard, SpaceChanceCard, PaymentChanceCard, ChoiceChanceCard, GiveChanceCard, FreeJailCard (or something like that)
- * change instance variables to private and add getters/setters
+ * change instance variables to private and add getters/setters [-]
  * look for unused variables to get rid of
  */
 
 public class MonopolyJr 
 {
-	public static Die die = new Die();
-	public static GameBoard gameBoard = new GameBoard();
-	public static ArrayList<Player> players = new ArrayList<Player>();
+	private static Die die = new Die();
+	private static GameBoard gameBoard = new GameBoard();
+	private static ArrayList<Player> players = new ArrayList<Player>();
 	
 	public static void main(String[] args)
 	{
@@ -65,7 +65,7 @@ public class MonopolyJr
 
 			for (Player player : players)
 			{
-				if (player.cash <= 0) 
+				if (player.getCash() <= 0) 
 				{
 					// players.remove(player); <- Cannot remove from list while looping, throws ConcurrentModificationException.
 					removedPlayers.add(player); // Add player that needs to be removed to another array list called RemovedPlayers
@@ -88,41 +88,41 @@ public class MonopolyJr
 	 */
 	public static void turn(Player player)
 	{
-		if (player.hasPropertyChanceCard)	//handles chance cards [16 - 19]
+		if (player.getPropertyChanceCard())	//handles chance cards [16 - 19]
 		{
-			player.position = gameBoard.findNearestProperty(player.position);
-			Property landedOn = (Property)gameBoard.board[player.position];
+			player.setPosition(gameBoard.findNearestProperty(player.getPosition()));
+			Property landedOn = (Property)gameBoard.getGameBoard(player.getPosition());
 			
-			if (landedOn.owned)
+			if (landedOn.getOwnedStatus())
 			{
-				player.cash -= landedOn.cost;
-				landedOn.owner.cash += landedOn.cost;
-				landedOn.owner = player;
+				player.setCash(landedOn.getCost(), "remove");
+				landedOn.getOwner().setCash(landedOn.getCost(), "add");
+				landedOn.setOwner(player);
 			}
 			else
 			{
 				landedOn.onLanding(player);
 			}
 			
-			player.hasPropertyChanceCard = false;
+			player.setPropertyChanceCard(false);
 		}
-		else if (player.inJail)	//handles jail
+		else if (player.getJailStatus())	//handles jail
 		{
-			if (player.hasGetOutOfJailFree)
+			if (player.getJailFree())
 			{
-				player.inJail = false;
-				player.hasGetOutOfJailFree = false;
+				player.setJailStatus(false);
+				player.setJailFree(false);
 			}
 			else
 			{
-				player.inJail = false;
-				player.cash -= 1;
+				player.setJailStatus(false);
+				player.setCash(1, "remove");
 			}
 		}
 		else
 		{
 			player.moveForward(die.roll());
-			gameBoard.board[player.position].onLanding(player); // <- Cannot assign field "hasPropertyChanceCard" because the return value of "MonopolyJr.findPlayerByName(String)" is null
+			gameBoard.getGameBoard(player.getPosition()).onLanding(player); // <- Cannot assign field "hasPropertyChanceCard" because the return value of "MonopolyJr.findPlayerByName(String)" is null
 		}
 	}
 	
@@ -149,7 +149,7 @@ public class MonopolyJr
 	{
 		for (Player player : players)
 		{
-			if (player.name.equals(name)) return player;
+			if (player.getName().equals(name)) return player;
 		}
 		
 		return null;
@@ -162,9 +162,25 @@ public class MonopolyJr
 	 */
 	public static void bankruptCheck(Player player, int amountToPay)
 	{
-		if (player.cash - amountToPay < 0)
+		if (player.getCash() - amountToPay < 0)
 		{
 			
 		}
 	}
+
+	/**
+	 * Get Monopoly Jr. GameBoard
+	 * @return GameBoard
+	 */
+	public static GameBoard getGameBoard () {
+		return gameBoard;
+	} 
+
+	// /**
+	//  * Get Monopoly Jr. GameBoard Length
+	//  * @return GameBoard
+	//  */
+	// public static int getGameBoardLength () {
+	// 	return gameBoard.getGameBoardSize();
+	// } 
 }

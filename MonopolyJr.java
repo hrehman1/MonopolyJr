@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * MonopolyJr : main class with the essential functionality of monopoly
  * 
  * @author Hudhaifah Rehman & Gideon Antwi
- * @version 10/5/2021
+ * @version 10/13/2021
  */ 
 
 /** Current fixes
@@ -28,7 +28,8 @@ public class MonopolyJr
 	
 	public static void main(String[] args)
 	{
-		int currentPlayer = (int)(Math.random() * 4);
+		// Replaced 4 with size of players array
+		int currentPlayer = (int)(Math.random() * players.size());
 		Player winner = null;
 		
 		//initialize players
@@ -43,8 +44,9 @@ public class MonopolyJr
 		{
 			System.out.println("current Player: " + currentPlayer);
 			System.out.println("next Player: " + nextPlayer(currentPlayer));
-			turn(players.get(currentPlayer)); // <- Index 3 out of bounds for length 3
-			currentPlayer = nextPlayer(currentPlayer);
+			currentPlayer = nextPlayer(currentPlayer); 
+
+			turn(players.get(currentPlayer)); // <- Index n out of bounds for length n [FIXED]
 			
 			System.out.println();
 			for (Player player : players)
@@ -120,7 +122,7 @@ public class MonopolyJr
 		else
 		{
 			player.moveForward(die.roll());
-			gameBoard.board[player.position].onLanding(player);
+			gameBoard.board[player.position].onLanding(player); // <- Cannot assign field "hasPropertyChanceCard" because the return value of "MonopolyJr.findPlayerByName(String)" is null
 		}
 	}
 	

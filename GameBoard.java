@@ -2,14 +2,31 @@
  * GameBoard : class representing the gameboard, includes space finding methods 
  * 
  * @author Hudhaifah Rehman & Gideon Antwi
- * @version 10/1/2021
+ * @version 10/13/2021
  */
 
 import java.util.ArrayList;
 
 public class GameBoard
 {
-	public BoardSpace[] board;
+	private BoardSpace[] board;
+
+	/**
+	 * Get space on board
+	 * @param space - Board Space
+	 * @return board space
+	 */
+	public BoardSpace getGameBoard (int space) {
+		return board[space];
+	}
+
+	/**
+	 * Get board size
+	 * @return size of board
+	 */
+	public int getGameBoardSize () {
+		return board.length;
+	}
 	
 	/**
 	 * GameBoard() : initializes gameboard and assigns propertypairs
@@ -74,7 +91,7 @@ public class GameBoard
 			{
 				Property space = (Property)board[iterator];
 				
-				if (!space.owned) return iterator;
+				if (!space.getOwnedStatus()) return iterator;
 			}
 			
 			if (iterator == startIndex - 1) // makes sure iterator doesnt double check spaces and starts loop to find the nearest owned one instead
@@ -122,7 +139,7 @@ public class GameBoard
 			{
 				Property propertyToCheck = (Property)board[iterator];
 				
-				if (propertyToCheck.color.equals(color)) return iterator;	//checks if theres a color match
+				if (propertyToCheck.getColor().equals(color)) return iterator;	//checks if theres a color match
 			}
 		}
 		
@@ -146,7 +163,7 @@ public class GameBoard
 			{
 				Property propertyToCheck = (Property)board[iterator];
 				
-				if (propertyToCheck.color.equals(color) || propertyToCheck.color.equals(color2)) return iterator;
+				if (propertyToCheck.getColor().equals(color) || propertyToCheck.getColor().equals(color2)) return iterator;
 			}
 		}
 		
@@ -171,7 +188,7 @@ public class GameBoard
 			{
 				Property propertyToCheck = (Property)board[iterator];
 				
-				if (propertyToCheck.color.equals(color) || propertyToCheck.color.equals(color2) || propertyToCheck.color.equals(color3)) return iterator;
+				if (propertyToCheck.getColor().equals(color) || propertyToCheck.getColor().equals(color2) || propertyToCheck.getColor().equals(color3)) return iterator;
 			}
 		}
 		

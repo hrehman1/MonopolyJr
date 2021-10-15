@@ -2,7 +2,7 @@
  * FreeParking : object representing free parking space, no real functionality
  * 
  * @author Hudhaifah Rehman & Gideon Antwi
- * @version 10/5/2021
+ * @version 10/13/2021
  */
 
 public class FreeParking extends BoardSpace
@@ -15,6 +15,6 @@ public class FreeParking extends BoardSpace
 	@Override
 	public void onLanding(Player player)
 	{
-		System.out.println("You landed on Free Parking! Do nothing.");
+		System.out.println(player.getName() + ": " +"You landed on Free Parking! Do nothing.");
 	}
 }

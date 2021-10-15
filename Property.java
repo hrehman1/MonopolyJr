@@ -2,16 +2,47 @@
  * Property : object representing property space, checks for owned property pairs 
  * 
  * @author Hudhaifah Rehman & Gideon Antwi
- * @version 10/5/2021
+ * @version 10/13/2021
  */
 
 public class Property extends BoardSpace
 {
-	public int cost;
-	public String color;
-	public Property propertyPair;
-	public boolean owned;
-	public Player owner;
+	// Cost
+	private int cost;
+
+	public int getCost () {
+		return cost;
+	}
+
+	// Color
+	private String color;
+
+	public String getColor () {
+		return color;
+	}
+
+	private Property propertyPair;
+
+	// Owned
+	private boolean owned;
+
+	public void setOwnedStatus (boolean status) {
+		this.owned = status;
+	}
+
+	public boolean getOwnedStatus () {
+		return owned;
+	}
+
+	private Player owner;
+
+	public Player getOwner () {
+		return owner;
+	}
+
+	public void setOwner(Player player) {
+		this.owner = player;
+	}
 	
 	public Property(int cost, String color, String name)
 	{
@@ -39,22 +70,22 @@ public class Property extends BoardSpace
 		
 		if (owned)
 		{
-			if ((player.cash - cost) >= 0)
+			if ((player.getCash() - cost) >= 0)
 			{
-				player.cash -= cost;
-				owner.cash += cost;
+				player.setCash(cost, "remove");
+				owner.setCash(cost, "add");
 			}
 		}
 		else
 		{
-			if (player.hasPropertyChanceCard)
+			if (player.getPropertyChanceCard())
 			{
 				owned = true;
 				owner = player;
 			}
 			else
 			{
-				player.cash -= cost;
+				player.setCash(cost, "remove");
 				owned = true;
 				owner = player;
 			}
@@ -67,7 +98,7 @@ public class Property extends BoardSpace
 	public String toString()
 	{
 		if (owned)
-			return "You landed on " + name + ", pay $" + cost + " to " + owner.name;
+			return "You landed on " + name + ", pay $" + cost + " to " + owner.getName();
 		else
 			return "You landed on " + name + ", buy it for $" + cost;
 	}
@@ -79,11 +110,11 @@ public class Property extends BoardSpace
 	{
 		if (propertyPair.owned)
 		{
-			if (owner.name.equals(propertyPair.owner.name)) 
+			if (owner.getName().equals(propertyPair.owner.getName())) 
 			{
 				cost = cost * 2;
 				System.out.println("Properties " + name + " and " + propertyPair.name +
-						" are both owned by " + owner.name + ", they have doubled in rent");
+						" are both owned by " + owner.getName() + ", they have doubled in rent");
 			}
 		}
 	}

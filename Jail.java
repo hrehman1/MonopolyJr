@@ -2,7 +2,7 @@
  * Jail : object representing jail space, sends player to jail space and changes jail bool
  * 
  * @author Hudhaifah Rehman & Gideon Antwi
- * @version 10/5/2021
+ * @version 10/13/2021
  */
 
 public class Jail extends BoardSpace
@@ -19,8 +19,8 @@ public class Jail extends BoardSpace
 	public void onLanding(Player player)
 	{
 		System.out.println(this);
-		player.position = 6;
-		player.inJail = true;
+		player.setPosition(6);
+		player.setJailStatus(true);
 	}
 	
 	@Override

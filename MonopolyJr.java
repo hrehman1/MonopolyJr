@@ -9,15 +9,11 @@ import java.util.ArrayList;
 
 /** Current fixes
  * add message for free parking [-]
- * different message for free properties and paid properties
- * add get out of jail message
+ * different message for free properties and paid properties [-]
+ * add get out of jail message [-]
  * some kind of bug not allowing players to pay if they go into negatives, but still letting them continue playing
- * when any player goes bankrupt, unknown error happens in for loop to check bankruptcy
  * more player-program interaction (allowing players to type something to roll, etc)
- * migrate chance cards over to separate classes (not necessary but would help)
- * ^abstract class ChanceCard, children classes : ColorChanceCard, SpaceChanceCard, PaymentChanceCard, ChoiceChanceCard, GiveChanceCard, FreeJailCard (or something like that)
  * change instance variables to private and add getters/setters [-]
- * look for unused variables to get rid of
  */
 
 public class MonopolyJr 
@@ -112,11 +108,13 @@ public class MonopolyJr
 			{
 				player.setJailStatus(false);
 				player.setJailFree(false);
+				System.out.println("You used a get out of jail card, you are now free");
 			}
 			else
 			{
 				player.setJailStatus(false);
-				player.setCash(1, "remove");
+				player.setCash(1, "remove");			
+				System.out.println("You paid $1 to get out of jail");
 			}
 		}
 		else

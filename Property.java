@@ -66,14 +66,13 @@ public class Property extends BoardSpace
 	@Override
 	public void onLanding(Player player)
 	{
-		System.out.println(this);
-		
 		if (owned)
 		{
 			if ((player.getCash() - cost) >= 0)
 			{
 				player.setCash(cost, "remove");
 				owner.setCash(cost, "add");
+				System.out.println("You landed on " + name + ", pay $" + cost + " to " + owner.getName());
 			}
 		}
 		else
@@ -82,25 +81,18 @@ public class Property extends BoardSpace
 			{
 				owned = true;
 				owner = player;
+				System.out.println("You landed on " + name + ", buy it for free with chance card");
 			}
 			else
 			{
 				player.setCash(cost, "remove");
 				owned = true;
 				owner = player;
+				System.out.println("You landed on " + name + ", buy it for $" + cost);
 			}
 			
 			doubleRentCheck();
 		}
-	}
-	
-	@Override
-	public String toString()
-	{
-		if (owned)
-			return "You landed on " + name + ", pay $" + cost + " to " + owner.getName();
-		else
-			return "You landed on " + name + ", buy it for $" + cost;
 	}
 	
 	/**

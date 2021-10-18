@@ -124,6 +124,8 @@ public class Player
 			int remainingSpaces = spaces - (MonopolyJr.getGameBoard().getGameBoardSize() - position);
 			position = 0;
 			position += remainingSpaces;
+			System.out.println("You passed go, collect $2");
+			cash += 2;
 		}
 		else
 		{

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**	Project 1 : Monopoly Jr
  * MonopolyJr : main class with the essential functionality of monopoly
@@ -6,15 +7,6 @@ import java.util.ArrayList;
  * @author Hudhaifah Rehman & Gideon Antwi
  * @version 10/13/2021
  */ 
-
-/** Current fixes
- * add message for free parking [-]
- * different message for free properties and paid properties [-]
- * add get out of jail message [-]
- * some kind of bug not allowing players to pay if they go into negatives, but still letting them continue playing
- * more player-program interaction (allowing players to type something to roll, etc)
- * change instance variables to private and add getters/setters [-]
- */
 
 public class MonopolyJr 
 {
@@ -24,9 +16,11 @@ public class MonopolyJr
 	
 	public static void main(String[] args)
 	{
+		Scanner in = new Scanner(System.in);
+		
 		// Replaced 4 with size of players array
 		int currentPlayer = (int)(Math.random() * players.size());
-		Player winner = null;
+		Player lostPlayer = null;
 		
 		//initialize players
 		players.add(new Player("Toy Boat"));
@@ -34,55 +28,38 @@ public class MonopolyJr
 		players.add(new Player("Little Hazel"));
 		players.add(new Player("Little Scottie"));
 		
-		//tests
-		//just takes 20 turns for testing purposes
-		while (winner == null)
+		//Explains program
+		System.out.println("Hi, welcome to Monopoly Jr!");
+		
+		//Turn loop
+		do 
 		{
-			System.out.println("current Player: " + currentPlayer);
-			System.out.println("next Player: " + nextPlayer(currentPlayer));
-			currentPlayer = nextPlayer(currentPlayer); 
-
-			turn(players.get(currentPlayer)); // <- Index n out of bounds for length n [FIXED]
+			System.out.print("Input anything to roll the dice:");
+			in.nextLine();	//eats next line of input
 			
-			System.out.println();
-			for (Player player : players)
-			{
-				System.out.println(player);
-			}
-			System.out.println();
+			int roll = die.roll();
 			
-			if (players.size() == 1)
+			System.out.println("You rolled a " + roll + ", move forward " + roll + " spaces\n");
+			
+			turn(players.get(currentPlayer), roll);
+			
+			if (players.get(currentPlayer).getCash() < 0) 
 			{
-				winner = players.get(0);
+				lostPlayer = players.get(currentPlayer);	//gameend check 
 			}
 			
-			// [+] Remove player
-			ArrayList<Player> removedPlayers = new ArrayList<Player>();
-
-			for (Player player : players)
-			{
-				if (player.getCash() <= 0) 
-				{
-					// players.remove(player); <- Cannot remove from list while looping, throws ConcurrentModificationException.
-					removedPlayers.add(player); // Add player that needs to be removed to another array list called RemovedPlayers
-				}
-			}
-
-			// [+] Loop through removedPlayer arraylist, remove players from players arraylist
-			for (Player player : removedPlayers) {
-				players.remove(player);
-			} 
-
-			// [+] Clear removedPlayer arraylist for next set.
-			removedPlayers.clear();
-		}
+			System.out.println(players.get(currentPlayer).getName() + ", your bank balance is now $" + players.get(currentPlayer).getCash() + "\n");
+			currentPlayer = nextPlayer(currentPlayer);
+		} while (lostPlayer == null);
+		
+		System.out.println("Game Over, " + lostPlayer.getName() + " went bankrupt.");
 	}
 	
 	/** turn(Player) : carries out a full turn and does onLanding code
 	 * 
 	 * @param player
 	 */
-	public static void turn(Player player)
+	public static void turn(Player player, int roll)
 	{
 		if (player.getPropertyChanceCard())	//handles chance cards [16 - 19]
 		{
@@ -119,7 +96,7 @@ public class MonopolyJr
 		}
 		else
 		{
-			player.moveForward(die.roll());
+			player.moveForward(roll);
 			gameBoard.getGameBoard(player.getPosition()).onLanding(player); // <- Cannot assign field "hasPropertyChanceCard" because the return value of "MonopolyJr.findPlayerByName(String)" is null
 		}
 	}
@@ -131,7 +108,6 @@ public class MonopolyJr
 	 */
 	public static int nextPlayer(int currentPlayer)
 	{
-		System.out.println("Player size: " + players.size());
 		if (currentPlayer >= players.size() - 1 || currentPlayer == players.size())
 			return 0;
 		else
@@ -151,19 +127,6 @@ public class MonopolyJr
 		}
 		
 		return null;
-	}
-	
-	/**
-	 * 
-	 * @param player
-	 * @param amountToPay
-	 */
-	public static void bankruptCheck(Player player, int amountToPay)
-	{
-		if (player.getCash() - amountToPay < 0)
-		{
-			
-		}
 	}
 
 	/**
